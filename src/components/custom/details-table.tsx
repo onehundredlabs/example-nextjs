@@ -9,9 +9,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Invoice } from "@/types/invoices";
 import { useRouter } from "next/navigation";
 
-export const DetailsTable: React.FC = () => {
+interface DetailProps {
+  invoices: Invoice[];
+}
+
+export const DetailsTable: React.FC<DetailProps> = ({ invoices }) => {
   const router = useRouter();
 
   return (
@@ -26,18 +31,19 @@ export const DetailsTable: React.FC = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell
-            className="font-medium underline cursor-pointer"
-            onClick={() => router.push("/invoices/INV001")}
-          >
-            INV001
-          </TableCell>
-
-          <TableCell>Paid</TableCell>
-          <TableCell>Credit Card</TableCell>
-          <TableCell className="text-right">$250.00</TableCell>
-        </TableRow>
+        {invoices.map((invoice) => (
+          <TableRow key={invoice.invoiceId}>
+            <TableCell
+              onClick={() => router.push(`/invoices/${invoice.invoiceId}`)}
+              className="font-medium underline cursor-pointer"
+            >
+              {invoice.invoiceId}
+            </TableCell>
+            <TableCell>{invoice.status}</TableCell>
+            <TableCell>{invoice.method}</TableCell>
+            <TableCell className="text-right">${invoice.amount}</TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   );

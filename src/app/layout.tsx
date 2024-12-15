@@ -30,9 +30,7 @@ export default function RootLayout({
       >
         <Header />
 
-        <div className="container mx-auto py-4 px-4">
-          {children}
-        </div>
+        <div className="container mx-auto py-4 px-4">{children}</div>
       </body>
     </html>
   );
