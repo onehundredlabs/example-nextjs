@@ -11,14 +11,20 @@ import {
 } from "@/components/ui/table";
 import { Trash2 } from "lucide-react";
 import { deleteInvoiceItemAction } from "@/services/delete-invoice-item-action";
+import { useTransition } from "react";
+import { cn } from "@/lib/utils";
 
 interface DetailItemsProps {
   invoice: InvoiceWithItems;
 }
 
 export const DetailItems: React.FC<DetailItemsProps> = ({ invoice }) => {
+  const [isPending, startTransition] = useTransition();
+
   const onDelete = (invoiceItemId: string) => {
-    deleteInvoiceItemAction(invoice.invoiceId, invoiceItemId);
+    startTransition(async () => {
+      await deleteInvoiceItemAction(invoice.invoiceId, invoiceItemId);
+    });
   };
 
   return (
@@ -32,7 +38,7 @@ export const DetailItems: React.FC<DetailItemsProps> = ({ invoice }) => {
           <TableHead className="text-right">Actions</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>
+      <TableBody className={cn(isPending && "blur-md animate-pulse")}>
         {invoice.items.map((item, index) => (
           <TableRow key={index}>
             <TableCell>{item.description}</TableCell>

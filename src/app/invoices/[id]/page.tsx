@@ -7,7 +7,7 @@ export default async function DetailPage({
 }) {
   const invoiceId = (await params).id;
   const request = await fetch(
-    `http://localhost:3000/api/invoices/${invoiceId}`
+    `http://localhost:3001/api/invoices/${invoiceId}`
   );
   const data = await request.json();
 
