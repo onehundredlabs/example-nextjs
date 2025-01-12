@@ -1,4 +1,4 @@
-# JavaScript Frameworks (Next.js)
+# Example Next.js
 
 ## Getting Started
 
