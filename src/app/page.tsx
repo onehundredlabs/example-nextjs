@@ -1,14 +1,8 @@
-import { Overview } from "@/components/custom/overview";
+import { InvoiceSummaryKPI } from "@/components/custom/invoice-summary-kpi";
 
 export default async function OverviewPage() {
   const result = await fetch("http://localhost:3001/api/invoices/summary");
   const data = await result.json();
 
-  return (
-    <Overview
-      totalInvoices={data.totalInvoices}
-      totalAmount={data.totalAmount}
-      mostRecentInvoice={data.mostRecentInvoice}
-    />
-  );
+  return <InvoiceSummaryKPI summary={data} />;
 }
